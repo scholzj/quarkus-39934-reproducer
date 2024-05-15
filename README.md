@@ -8,12 +8,12 @@ mvn clean package -Pnative
 
 And run it:
 ```
-target/code-with-quarkus-1.0.0-SNAPSHOT-runner
+target/code-with-quarkus-1.0.0-SNAPSHOT-runner --namespace <kubernetes-namespace>
 ```
 
 You should see output like this:
 ```
-$ target/code-with-quarkus-1.0.0-SNAPSHOT-runner
+$ target/code-with-quarkus-1.0.0-SNAPSHOT-runner --namespace myproject
 __  ____  __  _____   ___  __ ____  ______
  --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
  -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
@@ -29,7 +29,7 @@ Where the Kubernetes cluster complains about `pod rejected: Pod Overhead set wit
 The problem seems to happen only with native build.
 Running it with `mvn quarkus:dev` seems to work fine and creates the Pod.
 
-Uncommenting the `.withOverhead(null)` part of the code in `GreetingCommand.java` on line 35 and rebuilding it fixes the error.
+Uncommenting the `.withOverhead(null)` part of the code in `GreetingCommand.java` on line 34 and rebuilding it fixes the error.
 
 
 ## My environment:

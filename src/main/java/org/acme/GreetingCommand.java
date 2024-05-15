@@ -8,14 +8,12 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 
-@Command(name = "greeting", mixinStandardHelpOptions = true)
+@Command(name = "quarkus-39934-reproducer", mixinStandardHelpOptions = true)
 public class GreetingCommand implements Runnable {
 
-    @Parameters(paramLabel = "<name>", defaultValue = "picocli",
-        description = "Your name.")
-    String name;
+    @CommandLine.Option(names = {"-n", "--namespace"}, defaultValue = "my-namespace", description = "Namespace where the od should be created.")
+    String namespace;
 
     @Override
     public void run() {
@@ -23,6 +21,7 @@ public class GreetingCommand implements Runnable {
 
         Pod pod = new PodBuilder()
                 .withNewMetadata()
+                    .withNamespace(namespace)
                     .withName("nginx")
                 .endMetadata()
                 .withNewSpec()
